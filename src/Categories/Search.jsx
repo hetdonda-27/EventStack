@@ -1,97 +1,48 @@
-// src/pages/Search.jsx
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import data from '../Data/card.json';
-import Card from '../Page/Card';
-import Eventfilter from './Eventfilter';
+import { useState } from "react";
+import { FaFilter, FaSearch } from "react-icons/fa";
 
-const filters = {
-  categories: ['all', 'Career', 'Sports', 'Arts & Culture'],
-  colleges: ['all', 'ABC College', 'XYZ University', 'DEF Institute'],
-  prices: ['all', 'Free', 'Paid']
-};
+const SearchBar = ({ initialQuery = "", onSearch, onToggleFilters, showFilters = false }) => {
+  const [query, setQuery] = useState(initialQuery);
 
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-};
-
-const Search = () => {
-  const query = useQuery().get('query') || '';
-  const [filterstate, setFilterstate] = useState({
-    category: 'all',
-    college: 'all',
-    price: 'all',
-    startDate: '',
-    endDate: '',
-    sort: 'none'
-  });
-
-  const [results, setResults] = useState([]);
-
-  useEffect(() => {
-    let filtered = data.filter(event =>
-      event.title.toLowerCase().includes(query.toLowerCase())
-    );
-
-    // Category filter
-    if (filterstate.category !== 'all') {
-      filtered = filtered.filter(event => event.category === filterstate.category);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (query.trim() !== "") {
+      onSearch(query);
     }
-
-
-    // College filter
-    if (filterstate.college !== 'all') {
-      filtered = filtered.filter(event => event.college === filterstate.college);
-    }
-
-    // Price filter
-    if (filterstate.price !== 'all') {
-      if (filterstate.price === 'Free') {
-        filtered = filtered.filter(event => event.price === 0 || event.price === 'Free');
-      } else {
-        filtered = filtered.filter(event => event.price > 0 || event.price === 'Paid');
-      }
-    }
-
-    // Date filter
-    if (filterstate.startDate) {
-      filtered = filtered.filter(event => event.date >= filterstate.startDate);
-    }
-    if (filterstate.endDate) {
-      filtered = filtered.filter(event => event.date <= filterstate.endDate);
-    }
-
-    // Sort filter
-    if (filterstate.sort === 'low') {
-      filtered = [...filtered].sort((a, b) => a.price - b.price);
-    } else if (filterstate.sort === 'high') {
-      filtered = [...filtered].sort((a, b) => b.price - a.price);
-    }
-
-    setResults(filtered);
-  }, [query, filterstate]);
+  };
 
   return (
-    <section className="py-12">
-      <div className="container mx-auto px-6">
-        <h2 className="text-2xl font-semibold mb-6">
-          Search Results for: <span className="text-indigo-600">{query}</span>
-        </h2>
-
-        <Eventfilter
-          filters={filters}
-          filterstate={filterstate}
-          setFilterstate={setFilterstate}
+    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mt-6">
+      <div className="flex bg-white rounded-full shadow-lg overflow-hidden border border-gray-200">
+        <input
+          type="text"
+          placeholder="Search events, clubs, or activities..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="flex-1 px-6 py-4 text-gray-700 focus:outline-none"
         />
-
-        {results.length > 0 ? (
-          <Card events={results} />
-        ) : (
-          <div className="text-center text-gray-500 mt-6">No events found.</div>
+        <button
+          type="submit"
+          className="bg-indigo-600 hover:bg-indigo-700 px-6 py-4 text-white font-semibold transition-colors flex items-center"
+        >
+          <FaSearch className="mr-2" /> Search
+        </button>
+        {showFilters && (
+          <button
+            type="button"
+            onClick={onToggleFilters}
+            className={`px-6 py-4 font-semibold transition-colors flex items-center ${
+              showFilters 
+                ? "bg-indigo-700 text-white" 
+                : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+            }`}
+          >
+            <FaFilter className="mr-2" /> Filters
+          </button>
         )}
       </div>
-    </section>
+    </form>
   );
 };
 
-export default Search;
+export default SearchBar;
