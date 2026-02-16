@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "homepage": "https://hetdonda-27.github.io/login",
   "name": "site",
   "version": "0.1.0",
@@ -51,5 +52,23 @@
   "devDependencies": {
     "gh-pages": "^6.3.0",
     "nodemon": "^3.1.10"
+=======
+  "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.6.0",
+    "axios": "^1.11.0",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.1",
+    "nodemailer": "^7.0.6",
+    "pdfkit": "^0.17.2",
+    "puppeteer": "^24.19.0",
+    "react-router-dom": "^7.7.1",
+    "react-scripts": "^5.0.1",
+    "router": "^2.2.0",
+    "sweetalert2": "^11.22.2"
+>>>>>>> c0667acbe8d276eb1ff3d17f897ff9beb4d6108e
   }
 }
