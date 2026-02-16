@@ -27,7 +27,7 @@ router.get("/download/:bookingId", async (req, res) => {
 
     doc.pipe(res);
 
-    doc.fontSize(20).text("🎟 Event Ticket", { align: "center" });
+    doc.fontSize(20).text("My Event Ticket", { align: "center" });
     doc.moveDown();
 
     doc.fontSize(16).text(`Event: ${event.category}`, { align: "left" });

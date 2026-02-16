@@ -12,7 +12,7 @@
     location: { type: String, required: true },
     maplink: { type: String },
     college: { type: String,required: true },
-    price: { type: Number, required: true },
+    price: { type: Number, required: true, min: 0 },
     desc: { type: String, required: true },
     image: { type: String },
   });

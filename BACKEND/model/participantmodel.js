@@ -7,7 +7,7 @@ const participantSchema = new Schema({
   email: { type: String, required: true },
   gender: {
     type: String,
-    required: true,
+    required: true,   
     enum: ['male', 'female', 'other']
   },
   age: { type: Number, required: true, min: 0 },
